@@ -1,5 +1,3 @@
-import { ConvertIso8601BasicToExtended } from "../utils";
-
 export const contestScreenName = location.pathname.split("/")[2] ?? "";
 export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText ?? "";
 
@@ -13,6 +11,12 @@ export const userScreenName: string | undefined = (() => {
   }
   return undefined;
 })();
+
+const ConvertIso8601BasicToExtended = (iso8601basic: string): string => {
+  // example: "20231210T2100"
+  const d = iso8601basic;
+  return `${d.substring(0, 4)}-${d.substring(4, 6)}-${d.substring(6, 11)}:${d.substring(11, 13)}`;
+};
 
 const contestDuration = document.querySelectorAll<HTMLAnchorElement>(".contest-duration > a");
 export const contestStartTime = new Date(
