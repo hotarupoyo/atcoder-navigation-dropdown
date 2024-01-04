@@ -23,7 +23,7 @@ AtCoder の自分の得点ページと自分の提出一覧ページと、AtCode
 
 ## GreasyFork からインストール
 
-TODO: あとで書く
+<https://greasyfork.org/ja/scripts/483835-atcoder-navigation-dropdown>
 
 ## ライセンス表示
 
