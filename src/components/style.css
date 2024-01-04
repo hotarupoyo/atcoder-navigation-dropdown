@@ -1,0 +1,24 @@
+/* ホバーでドロップダウン開く */
+.dropdown-hover-open.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* ドロップダウンをスクロール可能にする */
+.scrollable-menu {
+  height: auto;
+  max-height: 512px;
+  overflow-x: hidden;
+}
+
+/* ドロップダウンを中央寄せする */
+.dropdown-menu-center {
+  left: 50%;
+  right: auto;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
+/* テキスト中央寄せの継承を取り消す */
+.dropdown-menu-center > table {
+  text-align: initial;
+}
