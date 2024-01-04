@@ -13,9 +13,11 @@ AtCoder の自分の得点ページと自分の提出一覧ページと、AtCode
 
 ## 真似した拡張機能・ユーザースクリプト
 
-コンセプトは**atcoder-tasks-page-colorize-during-contests**を真似ています。
+コンセプトは**atcoder-tasks-page-colorize-during-contests**, **atcoder-problem-navigator**, **Comfortable Atcoder**を真似ています。
 
 - [iilj/atcoder\-tasks\-page\-colorize\-during\-contests: atcoder\-tasks\-page\-colorizer と同様の色付けを，コンテスト中にも行えるようにします．](https://github.com/iilj/atcoder-tasks-page-colorize-during-contests)
+- [atcoder\-problem\-navigator](https://greasyfork.org/ja/scripts/383360-atcoder-problem-navigator)
+- [Comfortable Atcoder](https://chromewebstore.google.com/detail/comfortable-atcoder/ipmmkccdccnephfilbjdnmnfcbopbpaj)
 
 ## GitHub リポジトリ
 
