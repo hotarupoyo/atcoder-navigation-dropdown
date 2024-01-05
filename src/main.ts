@@ -9,13 +9,13 @@ import tasksHtml from "./components/tasks.html?raw";
 import topHtml from "./components/top.html?raw";
 
 import { fetchMyScoresFromAtcoder, fetchMySubmissionsFromAtcoder, loadVisited11Contests } from "./apis/api";
-import { contestScreenName, contestStartTime, userScreenName } from "./consts/atcoder";
+import { contestId, contestStartTime, userId } from "./consts/atcoder";
 
 import { ContestProblems, Problem, SubmissionEntry } from "../types";
 import { submitTr } from "./components/submitTr";
 import { comparelexicographically, lookupClassForIsSolvedStatus } from "./utils";
-import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
 import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countSuccessProblems";
+import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
 
 (async () => {
   lscache.flushExpired();
@@ -58,16 +58,16 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
   // ドロップダウンにするとクリックで遷移しなくなるので、クリックイベント発火で遷移させる
   // イベントリスナー範囲はタブのみでドロップダウン部分は除く
   tabTop.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestScreenName}`;
+    location.href = `/contests/${contestId}`;
   });
   tabTasks.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestScreenName}/tasks`;
+    location.href = `/contests/${contestId}/tasks`;
   });
   tabSubmit.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestScreenName}/submit`;
+    location.href = `/contests/${contestId}/submit`;
   });
   tabSubmissions.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestScreenName}/submissions`;
+    location.href = `/contests/${contestId}/submissions`;
   });
 
   // APIコール
@@ -76,12 +76,12 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
     getContests(),
     getProblems() as unknown as Problem[],
     getContestsAndProblems() as unknown as ContestProblems[],
-    userScreenName != null ? getSubmissions(userScreenName) : <SubmissionEntry[]>[],
+    userId != null ? getSubmissions(userId) : <SubmissionEntry[]>[],
   ]);
   const scoresFromAtcoder = new Map<string, number>();
 
   // AtCoder Problemsがまだクロールしていないコンテストならば、AtCoderのページから問題、自分の提出一覧を取得する
-  if (!contests.some((element) => element.id === contestScreenName)) {
+  if (!contests.some((element) => element.id === contestId)) {
     const [problemsFromAtcoder, submissionsFromAtCoder] = await Promise.all([
       fetchMyScoresFromAtcoder(),
       fetchMySubmissionsFromAtcoder(),
@@ -113,7 +113,7 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
     .toSorted((a, b) => a.start_epoch_second - b.start_epoch_second)
     .toReversed();
 
-  const contestProblemsHere = contestProblems.filter((element2) => element2.contest_id === contestScreenName);
+  const contestProblemsHere = contestProblems.filter((element2) => element2.contest_id === contestId);
   // Problems Informationのcontest_idでフィルターするとABSの問題など再出題された問題が取得できないので
   // Pairs of Contests and Problemsでフィルターする
   const problemsHere = problems.filter((element) => {
@@ -126,7 +126,7 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
   }
   // 新しい順番に表示したいのでソートする
   const submissionsHere = submissions
-    .filter((element) => element.contest_id === contestScreenName)
+    .filter((element) => element.contest_id === contestId)
     .toSorted((a, b) => -(a.epoch_second - b.epoch_second));
 
   const representativeSubmissions = new Map<string, RepresentativeSubmissions>();
@@ -144,7 +144,7 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
     // Recentグループ 最近訪れた10コンテストを表示する
     const groupRecent = docTop.querySelector(".group-recent");
     for (const iterator of visited11Contests) {
-      if (iterator.id === contestScreenName) {
+      if (iterator.id === contestId) {
         continue; // 今のコンテストは除く
       }
       const ids = contestProblems
@@ -162,7 +162,7 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
     // Adjacentグループ
     const groupAdjacent = docTop.querySelector(".group-adjacent");
     for (const iterator of adjacentContests11) {
-      const liClass = iterator.id === contestScreenName ? "disabled" : "";
+      const liClass = iterator.id === contestId ? "disabled" : "";
       const ids = contestProblems
         .filter((element) => element.contest_id === iterator.id)
         .map((element) => element.problem_id);

@@ -1,7 +1,7 @@
 import { Contest } from "atcoder-problems-api/types";
 import lscache from "lscache";
 import { MyScore, SubmissionEntry } from "../../types";
-import { contestScreenName, contestTitle } from "../consts/atcoder";
+import { contestId, contestTitle } from "../consts/atcoder";
 import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheKeyTop } from "../consts/lscacheKey";
 import { parseMyScoresFromAtcoder, parseMySubmissionsFromAtcoder } from "./parseFromAtcoder";
 
@@ -9,10 +9,10 @@ import { parseMyScoresFromAtcoder, parseMySubmissionsFromAtcoder } from "./parse
 export const loadVisited11Contests = () => {
   let visited11Contests = (lscache.get(lscacheKeyTop) ?? []) as Contest[];
   // 更新する
-  if (!visited11Contests.some((element) => element.id === contestScreenName)) {
+  if (!visited11Contests.some((element) => element.id === contestId)) {
     const contest: Contest = {
-      id: contestScreenName,
-      title: contestTitle,
+      id: contestId ?? "",
+      title: contestTitle ?? "",
       // 使わない値だし値取得が面倒だから仮の値を設定した
       start_epoch_second: 0,
       duration_second: 0,

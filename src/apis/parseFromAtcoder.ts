@@ -1,9 +1,9 @@
 import { MyScore, SubmissionEntry } from "../../types";
-import { contestScreenName } from "../consts/atcoder";
+import { contestId } from "../consts/atcoder";
 
 /** 自分の得点状況ページから、問題名と得点をパースする */
 export const parseMyScoresFromAtcoder = async () => {
-  const res = await fetch(`https://atcoder.jp/contests/${contestScreenName}/score`);
+  const res = await fetch(`https://atcoder.jp/contests/${contestId}/score`);
   if (!res.ok) {
     throw new Error(res.statusText);
   }
@@ -24,14 +24,14 @@ export const parseMyScoresFromAtcoder = async () => {
     const score = Number((element?.children[2] as HTMLAnchorElement).innerText);
     const title = `${problemIndex}. ${name}`;
 
-    scores.push({ id, contest_id: contestScreenName, problem_index: problemIndex, name, title, score });
+    scores.push({ id, contest_id: contestId ?? "", problem_index: problemIndex, name, title, score });
   }
 
   return scores;
 };
 /** 自分の提出ページから、提出結果もろもろをパースする */
 export const parseMySubmissionsFromAtcoder = async () => {
-  const res = await fetch(`https://atcoder.jp/contests/${contestScreenName}/submissions/me`);
+  const res = await fetch(`https://atcoder.jp/contests/${contestId}/submissions/me`);
   if (!res.ok) {
     throw new Error(res.statusText);
   }

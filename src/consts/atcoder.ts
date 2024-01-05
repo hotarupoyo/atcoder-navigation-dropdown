@@ -1,13 +1,68 @@
-export const contestScreenName = location.pathname.split("/")[2] ?? "";
-export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText ?? "";
+export const contestId = location.pathname.split("/")[2];
+export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText;
 
-export const userScreenName: string | undefined = (() => {
+export const problemId = (() => {
+  if (location.pathname.match(/contests\/.+\/tasks\/.+/) != null) {
+    // 問題ページ
+    return location.pathname.match(/contests\/.+\/tasks\/.+/) != null ? location.pathname.split("/")[4] : undefined;
+  }
+  if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
+    // 提出詳細ページ
+    const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
+    const tr = trs.find((element) =>
+      ["問題", "Tasks"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
+    );
+    if (tr == null) {
+      return undefined;
+    }
+    return ((tr.lastElementChild as HTMLTableCellElement).firstElementChild as HTMLAnchorElement).pathname.split(
+      "/",
+    )[4];
+  }
+  return undefined;
+})();
+
+export const problemTitle = (() => {
+  if (location.pathname.match(/contests\/.+\/tasks\/.+/) != null) {
+    // 問題ページ
+    return document.querySelector<HTMLMetaElement>("meta[property='og:title']")?.getAttribute("content") ?? undefined;
+  }
+  if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
+    // 提出詳細ページ
+    const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
+    const tr = trs.find((element) =>
+      ["問題", "Tasks"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
+    );
+    if (tr == null) {
+      return undefined;
+    }
+    return (tr.lastElementChild as HTMLTableCellElement).innerText.trim();
+  }
+  return undefined;
+})();
+
+export const userId: string | undefined = (() => {
   const aElements = document.querySelectorAll<HTMLAnchorElement>("ul > li > ul > li > a");
   for (let i = 0; i < aElements.length; i++) {
     const element = aElements[i];
     if (element != null && ["マイプロフィール", "My Profile"].includes(element.innerText.trim())) {
       return element.pathname.split("/")[2];
     }
+  }
+  return undefined;
+})();
+
+export const userIdSubmittedBy = (() => {
+  if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
+    // 提出詳細ページ
+    const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
+    const tr = trs.find((element) =>
+      ["ユーザ", "User"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
+    );
+    if (tr == null) {
+      return undefined;
+    }
+    return (tr.lastElementChild as HTMLTableCellElement).innerText.trim();
   }
   return undefined;
 })();
