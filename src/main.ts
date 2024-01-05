@@ -119,10 +119,11 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
   const problemsHere = problems.filter((element) => {
     return contestProblemsHere.some((element2) => element2.problem_id === element.id);
   });
+  problemsHere.sort((a, b) => -comparelexicographically(a.id, b.id));
   // HACK: 典型90問はproblem_idが順番通りではないので、典型90問を含め問題がアルファベットの数より多かったらproblem_indexでソートする
   // FIXME: ABSの問題順番がおかしい
   if (problemsHere.length > 26) {
-    problemsHere.sort((a, b) => comparelexicographically(a.problem_index, b.problem_index));
+    problemsHere.sort((a, b) => -comparelexicographically(a.problem_index, b.problem_index));
   }
   // 新しい順番に表示したいのでソートする
   const submissionsHere = submissions
