@@ -1,5 +1,5 @@
-import { MyScore, SubmissionEntry } from "../../types";
 import { contestId } from "../consts/atcoder";
+import { MyScore } from "../types";
 
 /** 自分の得点状況ページから、問題名と得点をパースする */
 export const parseMyScoresFromAtcoder = async () => {

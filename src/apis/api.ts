@@ -1,8 +1,7 @@
-import { Contest } from "atcoder-problems-api/types";
 import lscache from "lscache";
-import { MyScore, SubmissionEntry } from "../../types";
 import { contestId, contestTitle } from "../consts/atcoder";
 import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheKeyTop } from "../consts/lscacheKey";
+import { MyScore } from "../types";
 import { parseMyScoresFromAtcoder, parseMySubmissionsFromAtcoder } from "./parseFromAtcoder";
 
 /** 最近訪れた11コンテストをローカルストレージへ更新し返却する */

@@ -1,18 +1,12 @@
-import { getContests, getContestsAndProblems, getProblems } from "atcoder-problems-api/information";
-import { getSubmissions } from "atcoder-problems-api/submission";
-import { Contest } from "atcoder-problems-api/types";
 import lscache from "lscache";
+import { fetchMyScoresFromAtcoder, fetchMySubmissionsFromAtcoder, loadVisited11Contests } from "./apis/api";
 import "./components/custom.scss";
 import "./components/style.css";
 import submitHtml from "./components/submit.html?raw";
+import { submitTr } from "./components/submitTr";
 import tasksHtml from "./components/tasks.html?raw";
 import topHtml from "./components/top.html?raw";
-
-import { fetchMyScoresFromAtcoder, fetchMySubmissionsFromAtcoder, loadVisited11Contests } from "./apis/api";
 import { contestId, contestStartTime, userId } from "./consts/atcoder";
-
-import { ContestProblems, Problem, SubmissionEntry } from "../types";
-import { submitTr } from "./components/submitTr";
 import { comparelexicographically, lookupClassForIsSolvedStatus } from "./utils";
 import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countSuccessProblems";
 import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
@@ -74,8 +68,8 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
   const visited11Contests = loadVisited11Contests();
   const [contests, problems, contestProblems, submissions] = await Promise.all([
     getContests(),
-    getProblems() as unknown as Problem[],
-    getContestsAndProblems() as unknown as ContestProblems[],
+    getProblems(),
+    getContestsAndProblems(),
     userId != null ? getSubmissions(userId) : <SubmissionEntry[]>[],
   ]);
   const scoresFromAtcoder = new Map<string, number>();

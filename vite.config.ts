@@ -16,6 +16,7 @@ export default defineConfig({
         description: packageJson.description,
         match: ["https://atcoder.jp/contests/*"],
         license: packageJson.license,
+        require: "https://greasyfork.org/scripts/437862-atcoder-problems-api/code/atcoder-problems-api.js",
       },
     }),
   ],

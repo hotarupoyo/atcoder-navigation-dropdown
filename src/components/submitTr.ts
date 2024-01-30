@@ -1,6 +1,4 @@
-import { ContestProblems, Problem, SubmissionEntry } from "../../types";
-
-export const submitTr = (s: SubmissionEntry, p: Problem, cp: ContestProblems) => {
+export const submitTr = (s: SubmissionEntry, p: Problem, cp: ContestAndProblem) => {
   const time = new Date(s.epoch_second * 1000).toLocaleString();
   const problemUrl = `/contests/${s.contest_id}/tasks/${s.problem_id}`;
   const problemTitle = `${cp.problem_index} - ${p.name}`;
