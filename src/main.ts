@@ -72,7 +72,7 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
     getContests(),
     getProblems(),
     getContestsAndProblems(),
-    userScreenName != null ? getSubmissions(userScreenName) : <SubmissionEntry[]>[],
+    userScreenName !== "" ? getSubmissions(userScreenName) : <SubmissionEntry[]>[],
   ]);
   const scoresFromAtcoder = new Map<string, number>();
 
