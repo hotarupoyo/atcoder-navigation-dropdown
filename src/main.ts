@@ -6,7 +6,7 @@ import submitHtml from "./components/submit.html?raw";
 import { submitTr } from "./components/submitTr";
 import tasksHtml from "./components/tasks.html?raw";
 import topHtml from "./components/top.html?raw";
-import { contestId, contestStartTime, userId } from "./consts/atcoder";
+import { contestStartTime } from "./consts/atcoder";
 import { Contest, SubmissionEntry } from "./types";
 import { getContests, getContestsAndProblems, getProblems, getSubmissions } from "./types/atcoder-problems-api";
 import { comparelexicographically, lookupClassForIsSolvedStatus } from "./utils";
@@ -54,16 +54,16 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
   // ドロップダウンにするとクリックで遷移しなくなるので、クリックイベント発火で遷移させる
   // イベントリスナー範囲はタブのみでドロップダウン部分は除く
   tabTop.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestId}`;
+    location.href = `/contests/${contestScreenName}`;
   });
   tabTasks.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestId}/tasks`;
+    location.href = `/contests/${contestScreenName}/tasks`;
   });
   tabSubmit.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestId}/submit`;
+    location.href = `/contests/${contestScreenName}/submit`;
   });
   tabSubmissions.firstElementChild?.addEventListener("click", () => {
-    location.href = `/contests/${contestId}/submissions`;
+    location.href = `/contests/${contestScreenName}/submissions`;
   });
 
   // APIコール
@@ -72,12 +72,12 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
     getContests(),
     getProblems(),
     getContestsAndProblems(),
-    userId != null ? getSubmissions(userId) : <SubmissionEntry[]>[],
+    userScreenName != null ? getSubmissions(userScreenName) : <SubmissionEntry[]>[],
   ]);
   const scoresFromAtcoder = new Map<string, number>();
 
   // AtCoder Problemsがまだクロールしていないコンテストならば、AtCoderのページから問題、自分の提出一覧を取得する
-  if (!contests.some((element) => element.id === contestId)) {
+  if (!contests.some((element) => element.id === contestScreenName)) {
     const [problemsFromAtcoder, submissionsFromAtCoder] = await Promise.all([
       fetchMyScoresFromAtcoder(),
       fetchMySubmissionsFromAtcoder(),
@@ -109,7 +109,7 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
     .toSorted((a, b) => a.start_epoch_second - b.start_epoch_second)
     .toReversed();
 
-  const contestProblemsHere = contestProblems.filter((element2) => element2.contest_id === contestId);
+  const contestProblemsHere = contestProblems.filter((element2) => element2.contest_id === contestScreenName);
   // Problems Informationのcontest_idでフィルターするとABSの問題など再出題された問題が取得できないので
   // Pairs of Contests and Problemsでフィルターする
   const problemsHere = problems.filter((element) => {
@@ -123,7 +123,7 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
   }
   // 新しい順番に表示したいのでソートする
   const submissionsHere = submissions
-    .filter((element) => element.contest_id === contestId)
+    .filter((element) => element.contest_id === contestScreenName)
     .toSorted((a, b) => -(a.epoch_second - b.epoch_second));
 
   const representativeSubmissions = new Map<string, RepresentativeSubmissions>();
@@ -141,7 +141,7 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
     // Recentグループ 最近訪れた10コンテストを表示する
     const groupRecent = docTop.querySelector(".group-recent");
     for (const iterator of visited11Contests) {
-      if (iterator.id === contestId) {
+      if (iterator.id === contestScreenName) {
         continue; // 今のコンテストは除く
       }
       const ids = contestProblems
@@ -159,7 +159,7 @@ import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./util
     // Adjacentグループ
     const groupAdjacent = docTop.querySelector(".group-adjacent");
     for (const iterator of adjacentContests11) {
-      const liClass = iterator.id === contestId ? "disabled" : "";
+      const liClass = iterator.id === contestScreenName ? "disabled" : "";
       const ids = contestProblems
         .filter((element) => element.contest_id === iterator.id)
         .map((element) => element.problem_id);

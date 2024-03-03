@@ -18,7 +18,9 @@
       "getDetailedProblems",
       "getContestsAndProblems",
       "getEstimatedDifficulties",
-      "getSubmissions"
+      "getSubmissions",
+      "userScreenName",
+      "contestScreenName"
     ]
   },
   "json": {

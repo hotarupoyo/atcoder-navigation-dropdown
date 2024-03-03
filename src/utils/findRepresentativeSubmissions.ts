@@ -1,4 +1,5 @@
 import { contestEndTime, contestStartTime, nonPenaltyJudgeStatuses } from "../consts/atcoder";
+import { SubmissionEntry } from "../types";
 export type IsSolvedStatus = "successBefore" | "successIntime" | "success" | "warningIntime" | "warning" | undefined;
 export type RepresentativeSubmissions = {
   before: {

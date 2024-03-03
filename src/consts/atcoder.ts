@@ -1,4 +1,3 @@
-export const contestId = location.pathname.split("/")[2];
 export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText;
 
 export const problemId = (() => {
@@ -37,17 +36,6 @@ export const problemTitle = (() => {
       return undefined;
     }
     return (tr.lastElementChild as HTMLTableCellElement).innerText.trim();
-  }
-  return undefined;
-})();
-
-export const userId: string | undefined = (() => {
-  const aElements = document.querySelectorAll<HTMLAnchorElement>("ul > li > ul > li > a");
-  for (let i = 0; i < aElements.length; i++) {
-    const element = aElements[i];
-    if (element != null && ["マイプロフィール", "My Profile"].includes(element.innerText.trim())) {
-      return element.pathname.split("/")[2];
-    }
   }
   return undefined;
 })();
