@@ -1,3 +1,4 @@
+import { SubmissionEntry } from "../types";
 import { findRepresentativeSubmissions } from "./findRepresentativeSubmissions";
 
 export const countSuccessProblems = (

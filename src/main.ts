@@ -14,8 +14,6 @@ import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countS
 import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
 
 (async () => {
-  let a: Contest;
-
   lscache.flushExpired();
 
   let tabTop = undefined; // トップ
