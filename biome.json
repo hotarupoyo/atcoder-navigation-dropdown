@@ -13,17 +13,6 @@
       "indentStyle": "space"
     },
     "globals": [
-      "Contest",
-      "Problem",
-      "ContestAndProblem",
-      "MergedProblem",
-      "ProblemModel",
-      "UserRankEntry",
-      "UserLangRankEntry",
-      "RankingEntry",
-      "SumRankingEntry",
-      "LangRankingEntry",
-      "SubmissionEntry",
       "getContests",
       "getProblems",
       "getDetailedProblems",
@@ -43,7 +32,6 @@
   },
   "linter": {
     "enabled": true,
-    "ignore": ["src/types/atcoder-problems-api.d.ts"],
     "rules": {
       "all": true
     }

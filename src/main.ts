@@ -7,11 +7,15 @@ import { submitTr } from "./components/submitTr";
 import tasksHtml from "./components/tasks.html?raw";
 import topHtml from "./components/top.html?raw";
 import { contestId, contestStartTime, userId } from "./consts/atcoder";
+import { Contest, SubmissionEntry } from "./types";
+import { getContests, getContestsAndProblems, getProblems, getSubmissions } from "./types/atcoder-problems-api";
 import { comparelexicographically, lookupClassForIsSolvedStatus } from "./utils";
 import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countSuccessProblems";
 import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
 
 (async () => {
+  let a: Contest;
+
   lscache.flushExpired();
 
   let tabTop = undefined; // トップ
