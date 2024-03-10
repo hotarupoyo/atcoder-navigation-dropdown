@@ -1,5 +1,5 @@
-import { contestEndTime, contestStartTime, nonPenaltyJudgeStatuses } from "../consts/atcoder";
-import { SubmissionEntry } from "../types";
+import { contestEndTime, contestStartTime, nonPenaltyJudgeStatuses } from "../const/atcoder";
+import type { SubmissionEntry } from "../types/atcoder-problems-api";
 export type IsSolvedStatus = "successBefore" | "successIntime" | "success" | "warningIntime" | "warning" | undefined;
 export type RepresentativeSubmissions = {
   before: {

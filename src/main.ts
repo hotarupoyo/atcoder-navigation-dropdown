@@ -6,12 +6,18 @@ import submitHtml from "./components/submit.html?raw";
 import { submitTr } from "./components/submitTr";
 import tasksHtml from "./components/tasks.html?raw";
 import topHtml from "./components/top.html?raw";
-import { contestStartTime } from "./consts/atcoder";
-import { Contest, SubmissionEntry } from "./types";
-import { getContests, getContestsAndProblems, getProblems, getSubmissions } from "./types/atcoder-problems-api";
+import { contestStartTime } from "./const/atcoder";
+import {
+  type Contest,
+  type SubmissionEntry,
+  getContests,
+  getContestsAndProblems,
+  getProblems,
+  getSubmissions,
+} from "./types/atcoder-problems-api";
 import { comparelexicographically, lookupClassForIsSolvedStatus } from "./utils";
 import { countSuccessIntimeProblems, countSuccessProblems } from "./utils/countSuccessProblems";
-import { RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
+import { type RepresentativeSubmissions, findRepresentativeSubmissions } from "./utils/findRepresentativeSubmissions";
 
 (async () => {
   lscache.flushExpired();

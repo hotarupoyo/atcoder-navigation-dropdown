@@ -1,3 +1,5 @@
+import type { ContestAndProblem, Problem, SubmissionEntry } from "../types/atcoder-problems-api";
+
 export const submitTr = (s: SubmissionEntry, p: Problem, cp: ContestAndProblem) => {
   const time = new Date(s.epoch_second * 1000).toLocaleString();
   const problemUrl = `/contests/${s.contest_id}/tasks/${s.problem_id}`;

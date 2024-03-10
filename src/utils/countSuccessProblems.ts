@@ -1,4 +1,4 @@
-import { SubmissionEntry } from "../types";
+import type { SubmissionEntry } from "../types/atcoder-problems-api";
 import { findRepresentativeSubmissions } from "./findRepresentativeSubmissions";
 
 export const countSuccessProblems = (

@@ -1,4 +1,5 @@
-import { MyScore, SubmissionEntry } from "../types";
+import type { MyScore } from "../types";
+import type { SubmissionEntry } from "../types/atcoder-problems-api";
 
 /** 自分の得点状況ページから、問題名と得点をパースする */
 export const parseMyScoresFromAtcoder = async () => {
@@ -52,9 +53,9 @@ export const parseMySubmissionsFromAtcoder = async () => {
       "";
     const language = (element?.children[3] as HTMLAnchorElement).innerText;
     const point = Number((element?.children[4] as HTMLAnchorElement).innerText);
-    const length = parseInt((element?.children[5] as HTMLAnchorElement).innerText);
+    const length = Number.parseInt((element?.children[5] as HTMLAnchorElement).innerText);
     const result = (element?.children[6] as HTMLAnchorElement).innerText;
-    const executionTime = parseInt((element?.children[8] as HTMLAnchorElement).innerText);
+    const executionTime = Number.parseInt((element?.children[8] as HTMLAnchorElement).innerText);
     const id = Number(
       ((element?.children[9] as HTMLTableCellElement).firstElementChild as HTMLAnchorElement).pathname.split("/")[4],
     );

@@ -1,5 +1,5 @@
 import lscache from "lscache";
-import { contestScreenName, contestTitle } from "../const/atcoder";
+import { contestTitle } from "../const/atcoder";
 import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheKeyTop } from "../const/lscacheKey";
 import type { MyScore } from "../types";
 import type { Contest, SubmissionEntry } from "../types/atcoder-problems-api";

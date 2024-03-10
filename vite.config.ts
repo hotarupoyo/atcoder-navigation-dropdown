@@ -5,6 +5,7 @@ import packageJson from "./package.json" assert { type: "json" };
 // https://vitejs.dev/config/
 export default defineConfig({
   assetsInclude: ["**/*.html"],
+  build: { minify: false },
   plugins: [
     monkey({
       entry: "src/main.ts",
@@ -16,7 +17,7 @@ export default defineConfig({
         description: packageJson.description,
         match: ["https://atcoder.jp/contests/*"],
         license: packageJson.license,
-        require: "https://greasyfork.org/scripts/437862-atcoder-problems-api/code/atcoder-problems-api.js",
+        require: ["https://greasyfork.org/scripts/437862-atcoder-problems-api/code/atcoder-problems-api.js"],
       },
     }),
   ],

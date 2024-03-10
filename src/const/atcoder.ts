@@ -1,12 +1,13 @@
+export const contestScreenName = location.pathname.split("/")[2];
 export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText;
 
 export const problemId = (() => {
   if (location.pathname.match(/contests\/.+\/tasks\/.+/) != null) {
-    // 問題ページ URLから取得する
+    // 問題ページ
     return location.pathname.match(/contests\/.+\/tasks\/.+/) != null ? location.pathname.split("/")[4] : undefined;
   }
   if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
-    // 提出詳細ページ 表から取得する
+    // 提出詳細ページ
     const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
     const tr = trs.find((element) =>
       ["問題", "Tasks"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
@@ -23,11 +24,11 @@ export const problemId = (() => {
 
 export const problemTitle = (() => {
   if (location.pathname.match(/contests\/.+\/tasks\/.+/) != null) {
-    // 問題ページ metaから取得する
+    // 問題ページ
     return document.querySelector<HTMLMetaElement>("meta[property='og:title']")?.getAttribute("content") ?? undefined;
   }
   if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
-    // 提出詳細ページ 表から取得する
+    // 提出詳細ページ
     const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
     const tr = trs.find((element) =>
       ["問題", "Tasks"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
@@ -42,7 +43,7 @@ export const problemTitle = (() => {
 
 export const userIdSubmittedBy = (() => {
   if (location.pathname.match(/contests\/.+\/submissions\/\d+/) != null) {
-    // 提出詳細ページ 表から取得する
+    // 提出詳細ページ
     const trs = Array.from(document.querySelectorAll<HTMLTableRowElement>("tr"));
     const tr = trs.find((element) =>
       ["ユーザ", "User"].includes((element.firstElementChild as HTMLTableCellElement).innerText ?? ""),
@@ -62,7 +63,6 @@ const ConvertIso8601BasicToExtended = (iso8601basic: string): string => {
 };
 
 const contestDuration = document.querySelectorAll<HTMLAnchorElement>(".contest-duration > a");
-// コンテスト時間のtimeanddateのクエリパラメーターから取得する
 export const contestStartTime = new Date(
   ConvertIso8601BasicToExtended(new URLSearchParams(contestDuration.item(0).search).get("iso") ?? "0"),
 );

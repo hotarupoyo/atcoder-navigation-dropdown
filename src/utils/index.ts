@@ -1,4 +1,4 @@
-import { IsSolvedStatus } from "./findRepresentativeSubmissions";
+import type { IsSolvedStatus } from "./findRepresentativeSubmissions";
 
 export const comparelexicographically = (a: string, b: string): number => {
   if (a === b) {

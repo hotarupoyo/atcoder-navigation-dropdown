@@ -13,12 +13,6 @@
       "indentStyle": "space"
     },
     "globals": [
-      "getContests",
-      "getProblems",
-      "getDetailedProblems",
-      "getContestsAndProblems",
-      "getEstimatedDifficulties",
-      "getSubmissions",
       "userScreenName",
       "contestScreenName"
     ]
