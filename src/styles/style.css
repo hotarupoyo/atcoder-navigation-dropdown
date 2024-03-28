@@ -6,7 +6,7 @@
 /* ドロップダウンをスクロール可能にする */
 .scrollable-menu {
   height: auto;
-  max-height: 512px;
+  max-height: 80vh;
   overflow-x: hidden;
 }
 

@@ -1,15 +1,17 @@
 import lscache from "lscache";
-import { contestTitle } from "../const/atcoder";
-import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheKeyTop } from "../const/lscacheKey";
+import { contestScreenName, contestTitle } from "../const/atcoder";
 import type { MyScore } from "../types";
 import type { Contest, SubmissionEntry } from "../types/atcoder-problems-api";
+import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheVisitedContestHistory } from "./lscacheKey";
 import { parseMyScoresFromAtcoder, parseMySubmissionsFromAtcoder } from "./parseFromAtcoder";
 
-/** 最近訪れた11コンテストをローカルストレージへ更新し返却する */
-export const loadVisited11Contests = () => {
-  let visited11Contests = (lscache.get(lscacheKeyTop) ?? []) as Contest[];
+/** 最近訪れた31コンテストを更新する */
+export const updateVisitedContestHistory = () => {
+  // ローカルストレージに保存していない場合は、空配列にする
+  let contests = (lscache.get(lscacheVisitedContestHistory) ?? []) as Contest[];
   // 更新する
-  if (!visited11Contests.some((element) => element.id === contestScreenName)) {
+  const tail = contests[contests.length - 1];
+  if (tail?.id !== contestScreenName) {
     const contest: Contest = {
       id: contestScreenName ?? "",
       title: contestTitle ?? "",
@@ -18,11 +20,15 @@ export const loadVisited11Contests = () => {
       duration_second: 0,
       rate_change: "",
     };
-    visited11Contests.push(contest);
+    contests.push(contest);
   }
-  visited11Contests = visited11Contests.slice(0, 11);
-  lscache.set(lscacheKeyTop, visited11Contests, 365 * 24 * 60);
-  return visited11Contests;
+  contests = contests.slice(0, 31);
+  lscache.set(lscacheVisitedContestHistory, contests, 365 * 24 * 60);
+};
+
+export const getVisitedContestHistory = () => {
+  // ローカルストレージに保存していない場合は、空配列にする
+  return (lscache.get(lscacheVisitedContestHistory) ?? []) as Contest[];
 };
 
 export const fetchMyScoresFromAtcoder = async (): Promise<MyScore[]> => {
