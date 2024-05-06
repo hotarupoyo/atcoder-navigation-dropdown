@@ -1,7 +1,7 @@
 import lscache from "lscache";
-import { contestScreenName, contestTitle } from "../const/atcoder";
+import { contestTitle } from "../const/atcoder";
 import type { MyScore } from "../types";
-import type { Contest, SubmissionEntry } from "../types/atcoder-problems-api";
+import type { Contest, ContestAndProblem, Problem, SubmissionEntry } from "../types/atcoder-problems-api";
 import { lscacheKeyMyScores, lscacheKeyMySubmissions, lscacheVisitedContestHistory } from "./lscacheKey";
 import { parseMyScoresFromAtcoder, parseMySubmissionsFromAtcoder } from "./parseFromAtcoder";
 
@@ -66,5 +66,38 @@ export const fetchMySubmissionsFromAtcoder = async (): Promise<SubmissionEntry[]
     // 何らかの原因でAtCoderのページのリクエストに失敗したときは、空の配列をキャッシュして、連続でAtCoderのページをリクエストしないようにする
     lscache.set(lscacheKeyMySubmissions, [], 10);
     return [];
+  }
+};
+
+/** AtCoder Problemsがまだクロールしていないコンテストならば、AtCoderのページから問題、自分の提出一覧を取得してマージする */
+export const mergeFetchedDataFromAtCoderAndProblemsApi = async (
+  contests: Contest[],
+  problems: Problem[],
+  contestProblems: ContestAndProblem[],
+  submissions: SubmissionEntry[],
+  scores: Map<string, number>,
+) => {
+  if (contests.some((element) => element.id === contestScreenName)) {
+    return;
+  }
+
+  const [problemsFromAtcoder, submissionsFromAtCoder] = await Promise.all([
+    fetchMyScoresFromAtcoder(),
+    fetchMySubmissionsFromAtcoder(),
+  ]);
+
+  // AtCoder Problems APIの取得結果とAtCoderの取得結果をマージする
+  problems.concat(problemsFromAtcoder);
+  submissions.concat(submissionsFromAtCoder);
+  for (const iterator of problemsFromAtcoder) {
+    contestProblems.push({
+      contest_id: iterator.contest_id,
+      problem_id: iterator.id,
+      problem_index: iterator.problem_index,
+    });
+  }
+  // 得点ページから得点を取り問題解いたか判定する 提出一覧は1ページしか取得しないので2ページあると困る
+  for (const iterator of problemsFromAtcoder) {
+    scores.set(iterator.id, iterator.score);
   }
 };

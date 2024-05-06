@@ -1,4 +1,3 @@
-export const contestScreenName = location.pathname.split("/")[2];
 export const contestTitle = document.querySelector<HTMLAnchorElement>(".contest-title")?.innerText;
 
 export const problemId = (() => {
